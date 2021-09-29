@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body, html {
+        font-family: arial, sans-serif;
+        font-size: 8pt;
+        background-color: #ffffff;
+        }
+        #visualization-bottom-row{
+            height: 400px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        #visualization-top-row {
+            height: 200px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        
+        .jumbotron {
+    			background-color: #d7e3e6;
+				color: rgb(0, 0, 0);
+				margin-bottom: 1rem;
+				padding: 3px 3px;
+				text-align: center;
+				border-width: 3px;
+				box-shadow: -2px 2px 2px rgb(117, 117, 117);
+		}
+        /*
+        .outer-top-row {
+            height: 200px;
+        }
+        .outer-bottom-row {
+            height: 700px;
+            background: #ffffff;
+        }
+        #visualization-top-row .vis-panel.vis-bottom {
+            display: none;
+        }
+        #visualization-top-row .vis-timeline{
+            border-bottom: none;
+            background: #ffffff;
+        }
+        */
+        .vis.timeline .vis.point{
+            padding:0px
+        }
+        .vis-item-content {
+            padding: 0px;
+        }
+        .vis-item.vis-item-content {
+            padding: 0px;
+        }
+        .vis-item {
+            height: fit-content;
+        }
+       
+        .vis-item.general {
+            background-color: rgb(98, 0, 255);
+            border-color: rgb(98, 0, 255);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.quest {
+            background-color: rgb(0, 195, 255);
+            border-color: rgb(0, 238, 255);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.skill {
+            background-color: rgb(9, 255, 0);
+            border-color: rgb(0, 255, 21);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.pvm {
+            background-color: rgb(255, 81, 0);
+            border-color: rgb(255, 81, 0);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.slayer {
+            background-color: rgb(0, 0, 0);
+            border-color: rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
+        }
+        /*
+        .vis-item.raids {
+            background-color: rgb(157, 255, 0);
+            border-color: rgb(208, 255, 0);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.quest {
+            background-color: rgb(0, 255, 213);
+            border-color: rgb(0, 162, 255);
+            color: rgb(0, 0, 0);
+        }
+        */
+        .vis-item.clue {
+            background-color: rgb(126, 255, 137);
+            border-color: rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.leagues {
+            background-color: rgb(126, 255, 249);
+            border-color: rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.deadman {
+            background-color: rgb(255, 129, 129);
+            border-color: rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.king {
+            background-color: rgb(255, 251, 0);
+            border-color: rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
+        }
+        
+        .img {
+            display:inline-block
+        }
+        td {
+            padding: 0px;
+        }
+
+        </style> 
+        <title>OSRS Timeline</title>   
+    </head>
+
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="https://visjs.github.io/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js"></script>
+        <link href="style.css" rel="stylesheet"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+        <script id="item-template" type="text/x-handlebars-template">
+            
+          <table class="update">
+            <tr>
+                <td><img src="{{image}}"  height="20px" width="auto"></td>
+                <td class="description">{{content}}</td>
+              
+            </tr>
+          </table>
+        </script>
+
+            <div class="jumbotron">
+                <!-- <img src="Old_School_RuneScape_logo.png" width="250px" height="118px"> -->
+                <h1 style="font-size:16px; padding: 2px; margin: 2px;">OSRS Timeline</h1>
+                <h3 style="padding: 2px; margin: 2px;"> by rururupert</h3>
+            </div>
+            <div class="outer-top-row">
+                <div id="visualization-top-row"></div>
+            </div>
+
+            <div class="outer-bottom-row">
+                <div id="visualization-bottom-row"></div>
+            </div>
+
+        <script>
+        var template = Handlebars.compile(document.getElementById('item-template').innerHTML);  
+        var items_graph = [
+        {x: '2021-10-01', y: 66347},   {x: '2021-09-24', y: 66130}, {x: '2021-09-17', y: 67105}, {x: '2021-09-10', y: 64343}, {x: '2021-09-03', y: 63925}, {x: '2021-08-27', y: 66224}, {x: '2021-08-20', y: 64706}, {x: '2021-08-13', y: 64123}, {x: '2021-08-06', y: 62953}, {x: '2021-07-30', y: 62738}, {x: '2021-07-23', y: 59526}, {x: '2021-07-16', y: 59525}, {x: '2021-07-09', y: 59898}, {x: '2021-07-02', y: 59188}, {x: '2021-06-25', y: 59341}, {x: '2021-06-18', y: 62580}, {x: '2021-06-11', y: 63282}, {x: '2021-06-04', y: 69847}, {x: '2021-05-28', y: 69498}, {x: '2021-05-21', y: 71099}, {x: '2021-05-14', y: 73352}, {x: '2021-05-07', y: 77060}, {x: '2021-04-30', y: 76958}, {x: '2021-04-23', y: 78518}, {x: '2021-04-16', y: 76715}, {x: '2021-04-09', y: 79037}, {x: '2021-04-02', y: 79205}, {x: '2021-03-26', y: 80075}, {x: '2021-03-19', y: 80245}, {x: '2021-03-12', y: 80791}, {x: '2021-03-05', y: 77089}, {x: '2021-02-26', y: 80580}, {x: '2021-02-19', y: 83522}, {x: '2021-02-12', y: 82956}, {x: '2021-02-05', y: 85320}, {x: '2021-01-29', y: 83062}, {x: '2021-01-22', y: 83330}, {x: '2021-01-15', y: 81934}, {x: '2021-01-08', y: 81658}, {x: '2021-01-05', y: 78489}, {x: '2020-12-29', y: 77538}, {x: '2020-12-22', y: 85338}, {x: '2020-12-15', y: 86290}, {x: '2020-12-08', y: 93745}, {x: '2020-12-01', y: 99752}, {x: '2020-11-24', y: 107714}, {x: '2020-11-17', y: 115863}, {x: '2020-11-10', y: 121383}, {x: '2020-11-03', y: 111657}, {x: '2020-10-27', y: 92137}, {x: '2020-10-20', y: 91783}, {x: '2020-10-13', y: 91011}, {x: '2020-10-06', y: 89520}, {x: '2020-09-29', y: 87014}, {x: '2020-09-22', y: 86235}, {x: '2020-09-15', y: 86248}, {x: '2020-09-08', y: 86343}, {x: '2020-09-01', y: 85363}, {x: '2020-08-25', y: 87770}, {x: '2020-08-18', y: 86378}, {x: '2020-08-11', y: 88212}, {x: '2020-08-04', y: 89935}, {x: '2020-07-28', y: 92201}, {x: '2020-07-21', y: 91736}, {x: '2020-07-14', y: 92545}, {x: '2020-07-07', y: 92626}, {x: '2020-06-30', y: 94730}, {x: '2020-06-23', y: 99339}, {x: '2020-06-16', y: 108290}, {x: '2020-06-09', y: 104709}, {x: '2020-06-02', y: 107120}, {x: '2020-05-26', y: 108667}, {x: '2020-05-19', y: 112839}, {x: '2020-05-12', y: 116319}, {x: '2020-05-05', y: 117316}, {x: '2020-04-28', y: 114796}, {x: '2020-04-21', y: 115631}, {x: '2020-04-14', y: 110964}, {x: '2020-04-07', y: 109759}, {x: '2020-03-31', y: 104530}, {x: '2020-03-24', y: 93408}, {x: '2020-03-17', y: 78664}, {x: '2020-03-10', y: 75804}, {x: '2020-03-03', y: 76368}, {x: '2020-02-25', y: 75014}, {x: '2020-02-18', y: 74580}, {x: '2020-02-11', y: 73934}, {x: '2020-02-04', y: 70649}, {x: '2020-01-28', y: 69938}, {x: '2020-01-21', y: 67827}, {x: '2020-01-14', y: 69000}, {x: '2020-01-07', y: 68344}, {x: '2019-12-31', y: 68481}, {x: '2019-12-24', y: 66844}, {x: '2019-12-17', y: 64037}, {x: '2019-12-10', y: 63519}, {x: '2019-12-03', y: 65066}, {x: '2019-11-26', y: 68505}, {x: '2019-11-19', y: 71405}, {x: '2019-11-12', y: 58281}, {x: '2019-11-05', y: 58324}, {x: '2019-10-29', y: 60937}, {x: '2019-10-22', y: 63451}, {x: '2019-10-15', y: 65957}, {x: '2019-10-08', y: 67102}, {x: '2019-10-01', y: 65889}, {x: '2019-09-24', y: 66405}, {x: '2019-09-17', y: 65888}, {x: '2019-09-10', y: 70527}, {x: '2019-09-03', y: 69985}, {x: '2019-08-27', y: 72219}, {x: '2019-08-20', y: 72046}, {x: '2019-08-13', y: 74293}, {x: '2019-08-06', y: 73686}, {x: '2019-07-30', y: 71448}, {x: '2019-07-23', y: 72141}, {x: '2019-07-16', y: 73466}, {x: '2019-07-09', y: 73034}, {x: '2019-07-02', y: 71367}, {x: '2019-06-25', y: 72479}, {x: '2019-06-18', y: 74519}, {x: '2019-06-11', y: 78157}, {x: '2019-06-04', y: 83026}, {x: '2019-05-28', y: 78883}, {x: '2019-05-21', y: 80825}, {x: '2019-05-14', y: 81386}, {x: '2019-05-07', y: 81529}, {x: '2019-04-30', y: 86643}, {x: '2019-04-23', y: 85513}, {x: '2019-04-16', y: 80461}, {x: '2019-04-09', y: 79515}, {x: '2019-04-02', y: 79994}, {x: '2019-03-26', y: 87158}, {x: '2019-03-19', y: 87385}, {x: '2019-03-12', y: 86353}, {x: '2019-03-05', y: 90185}, {x: '2019-02-26', y: 93750}, {x: '2019-02-19', y: 97272}, {x: '2019-02-12', y: 96846}, {x: '2019-02-05', y: 98135}, {x: '2019-01-29', y: 98175}, {x: '2019-01-22', y: 100711}, {x: '2019-01-15', y: 99077}, {x: '2019-01-08', y: 96134}, {x: '2019-01-01', y: 96445}, {x: '2018-12-25', y: 93904}, {x: '2018-12-18', y: 93225}, {x: '2018-12-11', y: 93492}, {x: '2018-12-04', y: 93758}, {x: '2018-11-27', y: 97294}, {x: '2018-11-20', y: 102018}, {x: '2018-11-13', y: 101587}, {x: '2018-11-06', y: 83194}, {x: '2018-10-30', y: 56667}, {x: '2018-10-23', y: 55542}, {x: '2018-10-16', y: 58558}, {x: '2018-10-09', y: 58760}, {x: '2018-10-02', y: 57719}, {x: '2018-09-25', y: 60139}, {x: '2018-09-18', y: 60036}, {x: '2018-09-11', y: 58913}, {x: '2018-09-04', y: 58844}, {x: '2018-08-28', y: 57483}, {x: '2018-08-21', y: 58562}, {x: '2018-08-14', y: 59304}, {x: '2018-08-07', y: 60215}, {x: '2018-07-31', y: 58865}, {x: '2018-07-24', y: 56780}, {x: '2018-07-17', y: 54159}, {x: '2018-07-10', y: 52726}, {x: '2018-07-03', y: 48263}, {x: '2018-06-26', y: 39979}, {x: '2018-06-19', y: 51494}, {x: '2018-06-12', y: 51663}, {x: '2018-06-05', y: 51775}, {x: '2018-05-29', y: 50740}, {x: '2018-05-22', y: 50377}, {x: '2018-05-15', y: 47496}, {x: '2018-05-08', y: 48277}, {x: '2018-05-01', y: 50653}, {x: '2018-04-24', y: 49172}, {x: '2018-04-17', y: 49862}, {x: '2018-04-10', y: 51968}, {x: '2018-04-03', y: 52299}, {x: '2018-03-27', y: 54486}, {x: '2018-03-20', y: 52937}, {x: '2018-03-13', y: 52367}, {x: '2018-03-06', y: 53100}, {x: '2018-02-27', y: 52843}, {x: '2018-02-20', y: 53271}, {x: '2018-02-13', y: 53275}, {x: '2018-02-06', y: 52006}, {x: '2018-01-30', y: 53476}, {x: '2018-01-23', y: 55169}, {x: '2018-01-16', y: 55477}, {x: '2018-01-09', y: 53569}, {x: '2018-01-02', y: 52779}, {x: '2017-12-26', y: 51366}, {x: '2017-12-19', y: 48730}, {x: '2017-12-12', y: 46751}, {x: '2017-12-05', y: 43998}, {x: '2017-11-28', y: 43869}, {x: '2017-11-21', y: 43114}, {x: '2017-11-14', y: 43449}, {x: '2017-11-07', y: 45213}, {x: '2017-10-31', y: 46087}, {x: '2017-10-24', y: 44807}, {x: '2017-10-17', y: 45023}, {x: '2017-10-10', y: 44548}, {x: '2017-10-03', y: 46399}, {x: '2017-09-26', y: 45815}, {x: '2017-09-19', y: 44444}, {x: '2017-09-12', y: 44961}, {x: '2017-09-05', y: 43650}, {x: '2017-08-29', y: 42783}, {x: '2017-08-22', y: 45022}, {x: '2017-08-15', y: 44742}, {x: '2017-08-08', y: 45152}, {x: '2017-08-01', y: 44889}, {x: '2017-07-25', y: 43560}, {x: '2017-07-18', y: 44295}, {x: '2017-07-11', y: 47033}, {x: '2017-07-04', y: 44323}, {x: '2017-06-27', y: 43435}, {x: '2017-06-20', y: 43166}, {x: '2017-06-13', y: 47770}, {x: '2017-06-06', y: 43369}, {x: '2017-05-30', y: 41081}, {x: '2017-05-23', y: 44331}, {x: '2017-05-16', y: 44971}, {x: '2017-05-09', y: 46781}, {x: '2017-05-02', y: 45573}, {x: '2017-04-25', y: 46894}, {x: '2017-04-18', y: 45254}, {x: '2017-04-11', y: 44640}, {x: '2017-04-04', y: 46515}, {x: '2017-03-28', y: 46303}, {x: '2017-03-21', y: 45751}, {x: '2017-03-14', y: 44895}, {x: '2017-03-07', y: 41130}, {x: '2017-02-28', y: 36511}, {x: '2017-02-21', y: 45411}, {x: '2017-02-14', y: 43881}, {x: '2017-02-07', y: 44296}, {x: '2017-01-31', y: 44391}, {x: '2017-01-24', y: 46037}, {x: '2017-01-17', y: 46099}, {x: '2017-01-10', y: 47724}, {x: '2017-01-03', y: 45332}, {x: '2016-12-27', y: 43559}, {x: '2016-12-20', y: 39498}, {x: '2016-12-13', y: 38323}, {x: '2016-12-06', y: 40166}, {x: '2016-11-29', y: 37343}, {x: '2016-11-22', y: 36572}, {x: '2016-11-15', y: 33176}, {x: '2016-11-08', y: 32728}, {x: '2016-11-01', y: 33001}, {x: '2016-10-25', y: 33436}, {x: '2016-10-18', y: 32999}, {x: '2016-10-11', y: 32719}, {x: '2016-10-04', y: 31204}, {x: '2016-09-27', y: 32927}, {x: '2016-09-20', y: 30953}, {x: '2016-09-13', y: 32303}, {x: '2016-09-06', y: 32841}, {x: '2016-08-30', y: 33139}, {x: '2016-08-23', y: 33814}, {x: '2016-08-16', y: 34098}, {x: '2016-08-09', y: 35778}, {x: '2016-08-02', y: 34569}, {x: '2016-07-26', y: 34228}, {x: '2016-07-19', y: 37036}, {x: '2016-07-12', y: 41122}, {x: '2016-07-05', y: 41241}, {x: '2016-06-28', y: 37581}, {x: '2016-06-21', y: 37808}, {x: '2016-06-14', y: 38013}, {x: '2016-06-07', y: 38145}, {x: '2016-05-31', y: 38079}, {x: '2016-05-24', y: 39767}, {x: '2016-05-17', y: 39506}, {x: '2016-05-10', y: 36204}, {x: '2016-05-03', y: 35460}, {x: '2016-04-26', y: 34884}, {x: '2016-04-19', y: 35132}, {x: '2016-04-12', y: 36853}, {x: '2016-04-05', y: 40043}, {x: '2016-03-29', y: 37927}, {x: '2016-03-22', y: 34217}, {x: '2016-03-15', y: 34748}, {x: '2016-03-08', y: 35205}, {x: '2016-03-01', y: 35967}, {x: '2016-02-23', y: 34932}, {x: '2016-02-16', y: 32512}, {x: '2016-02-09', y: 34472}, {x: '2016-02-02', y: 35257}, {x: '2016-01-26', y: 35612}, {x: '2016-01-19', y: 36765}, {x: '2016-01-12', y: 37763}, {x: '2016-01-05', y: 40434}, {x: '2015-12-29', y: 36065}, {x: '2015-12-22', y: 32783}, {x: '2015-12-15', y: 30331}, {x: '2015-12-08', y: 28899}, {x: '2015-12-01', y: 28951}, {x: '2015-11-24', y: 28221}, {x: '2015-11-17', y: 29321}, {x: '2015-11-10', y: 32249}, {x: '2015-11-03', y: 31532}, {x: '2015-10-27', y: 29503}, {x: '2015-10-20', y: 28413}, {x: '2015-10-13', y: 27827}, {x: '2015-10-06', y: 26276}, {x: '2015-09-29', y: 26891}, {x: '2015-09-22', y: 29325}, {x: '2015-09-15', y: 32868}, {x: '2015-09-08', y: 35167}, {x: '2015-09-01', y: 34748}, {x: '2015-08-25', y: 34723}, {x: '2015-08-18', y: 36529}, {x: '2015-08-11', y: 34780}, {x: '2015-08-04', y: 34635}, {x: '2015-07-28', y: 35549}, {x: '2015-07-21', y: 36026}, {x: '2015-07-14', y: 33792}, {x: '2015-07-07', y: 31317}, {x: '2015-06-30', y: 32588}, {x: '2015-06-23', y: 31765}, {x: '2015-06-16', y: 31651}, {x: '2015-06-09', y: 31244}, {x: '2015-06-02', y: 34964}, {x: '2015-05-26', y: 31797}, {x: '2015-05-19', y: 35133}, {x: '2015-05-12', y: 36677}, {x: '2015-05-05', y: 36684}, {x: '2015-04-28', y: 36669}, {x: '2015-04-21', y: 36704}, {x: '2015-04-14', y: 39688}, {x: '2015-04-07', y: 38226}, {x: '2015-03-31', y: 36326}, {x: '2015-03-24', y: 36015}, {x: '2015-03-17', y: 35693}, {x: '2015-03-10', y: 36426}, {x: '2015-03-03', y: 33849}, {x: '2015-02-24', y: 26297}, {x: '2015-02-17', y: 21372}, {x: '2015-02-10', y: 22298}, {x: '2015-02-03', y: 21343}, {x: '2015-01-27', y: 20996}, {x: '2015-01-20', y: 20149}, {x: '2015-01-13', y: 19755}, {x: '2015-01-06', y: 21029}, {x: '2014-12-30', y: 18366}, {x: '2014-12-23', y: 15985}, {x: '2014-12-16', y: 15422}, {x: '2014-12-09', y: 15267}, {x: '2014-12-02', y: 15686}, {x: '2014-11-25', y: 15937}, {x: '2014-11-18', y: 15945}, {x: '2014-11-11', y: 15771}, {x: '2014-11-04', y: 15863}, {x: '2014-10-28', y: 16307}, {x: '2014-10-21', y: 16358}, {x: '2014-10-14', y: 15820}, {x: '2014-10-07', y: 14866}, {x: '2014-09-30', y: 14602}, {x: '2014-09-23', y: 14711}, {x: '2014-09-16', y: 14069}, {x: '2014-09-09', y: 14833}, {x: '2014-09-02', y: 16318}, {x: '2014-08-26', y: 16690}, {x: '2014-08-19', y: 18698}, {x: '2014-08-12', y: 18359}, {x: '2014-08-05', y: 17117}, {x: '2014-07-29', y: 17446}, {x: '2014-07-22', y: 17588}, {x: '2014-07-15', y: 17476}, {x: '2014-07-08', y: 16739}, {x: '2014-07-01', y: 16099}, {x: '2014-06-24', y: 15350}, {x: '2014-06-17', y: 14919}, {x: '2014-06-10', y: 14547}, {x: '2014-06-03', y: 13406}, {x: '2014-05-27', y: 10437}, {x: '2014-05-20', y: 11118}, {x: '2014-05-13', y: 11817}, {x: '2014-05-06', y: 12169}, {x: '2014-04-29', y: 13524}, {x: '2014-04-22', y: 13678}, {x: '2014-04-15', y: 13099}, {x: '2014-04-08', y: 13887}, {x: '2014-04-01', y: 14669}, {x: '2014-03-25', y: 16172}, {x: '2014-03-18', y: 15636}, {x: '2014-03-11', y: 15744}, {x: '2014-03-04', y: 16845}, {x: '2014-02-25', y: 16769}, {x: '2014-02-18', y: 16535}, {x: '2014-02-11', y: 17299}, {x: '2014-02-04', y: 16886}, {x: '2014-01-28', y: 16642}, {x: '2014-01-21', y: 14925}, {x: '2014-01-14', y: 15167}, {x: '2014-01-07', y: 16678}, {x: '2013-12-31', y: 14310}, {x: '2013-12-24', y: 12049}, {x: '2013-12-17', y: 10963}, {x: '2013-12-10', y: 11056}, {x: '2013-12-03', y: 11956}, {x: '2013-11-26', y: 12870}, {x: '2013-11-19', y: 12263}, {x: '2013-11-12', y: 11565}, {x: '2013-11-05', y: 12224}, {x: '2013-10-29', y: 11217}, {x: '2013-10-22', y: 10345}, {x: '2013-10-15', y: 10616}, {x: '2013-10-08', y: 10288}, {x: '2013-10-01', y: 11582}, {x: '2013-09-24', y: 11240}, {x: '2013-09-17', y: 13503}, {x: '2013-09-10', y: 15174}, {x: '2013-09-03', y: 13068}, {x: '2013-08-27', y: 13712}, {x: '2013-08-20', y: 14525}, {x: '2013-08-13', y: 14341}, {x: '2013-08-06', y: 13621}, {x: '2013-07-30', y: 14570}, {x: '2013-07-23', y: 15264}, {x: '2013-07-16', y: 16270}, {x: '2013-07-09', y: 16778}, {x: '2013-07-02', y: 19029}, {x: '2013-06-25', y: 20366}, {x: '2013-06-18', y: 19943}, {x: '2013-06-11', y: 19353}, {x: '2013-06-04', y: 21267}, {x: '2013-05-28', y: 21327}, {x: '2013-05-21', y: 21079}, {x: '2013-05-14', y: 23576}, {x: '2013-05-07', y: 28350}, {x: '2013-04-30', y: 33398}, {x: '2013-04-23', y: 34818}, {x: '2013-04-16', y: 37588}, {x: '2013-04-09', y: 37127}, {x: '2013-04-02', y: 34670}, {x: '2013-03-26', y: 39161}, {x: '2013-03-19', y: 42421}, {x: '2013-03-12', y: 40372}, {x: '2013-03-05', y: 39837}, {x: '2013-02-26', y: 43418}
+        ];
+
+        var items = new vis.DataSet([
+          {content: "Osrs Released", start: '2013-02-22', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/7/73/Rune_full_helm.png?ce07d'},
+          {content: "Nightmare zone", start: '2013-09-05', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/3/3b/Herb_box.png?28729'},
+          {content: "Godwars Dungeon", start: '2013-10-17', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/f/fd/Armadyl_godsword.png?e56f0'},
+          {content: "Rooftop agility", start: '2013-12-05', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/9/9b/Mark_of_grace.png?717ea'},
+          {content: "Slayer helm", start: '2014-01-06', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/f/f6/Slayer_helmet.png?7fb98'},
+          {content: "Kraken", start: '2014-01-30', 'className': 'slayer', group: "slayer", image: 'https://oldschool.runescape.wiki/images/0/0e/Pet_kraken.png?85699'},
+          {content: "Wilderness bosses", start: '2014-04-13', 'className': 'pvm', group: "pvm", image: 'https://oldschool.runescape.wiki/images/a/aa/Dragon_pickaxe.png?c85b3'},
+          {content: "Motherlode mine", start: '2014-04-24', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/6/66/Golden_prospector_helmet.png?99c22'},
+          {content: "Elite Clues", start: '2014-06-12', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/a/a5/Clue_scroll_%28elite%29.png?e29cd'},  
+          {content: "Boss pets", start: '2014-07-17', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/9/9c/Pet_chaos_elemental.png?e2d9b'},  
+          {content: "Ironman", start: '2014-10-13', 'className': 'general', group: 0, image: 'https://oldschool.runescape.wiki/images/0/09/Ironman_chat_badge.png?a0a83'},  
+          {content: "Corporal Beast", start: '2014-10-16', 'className': 'pvm', group: "pvm", image: 'https://oldschool.runescape.wiki/images/5/53/Elysian_spirit_shield.png?1bc1e'},  
+          {content: "Zulrah", start: '2015-01-05', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/7/72/Toxic_blowpipe.png?79f0d'},  
+          {content: "Dragon defender", start: '2015-02-05', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/f/f1/Dragon_defender.png?3a184'},  
+          {content: "Free to Play", start: '2015-02-19', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/8/8f/Fancy_boots.png?97fe8'},  
+          {content: "Grand Exchange", start: '2015-02-26', 'className': 'general', group: 0, image:'https://static.wikia.nocookie.net/2007scape/images/3/30/Coins_10000.png/revision/latest/scale-to-width-down/30?cb=20181017211444'},  
+          {content: "Achievement diaries", start: '2015-03-05', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/3/35/Achievement_diary_cape_%28t%29.png?727e9'},  
+          {content: "Bonds", start: '2015-03-30', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/e/e3/Old_school_bond.png?2b41b'},  
+          {content: "Cerberus", start: '2015-08-27', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/4/42/Primordial_boots.png?e2ec4'},  
+          {content: "Abyssal sire", start: '2015-10-01', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/1/11/Abyssal_bludgeon.png?b10f5'},  
+          {content: "Max cape", start: '2015-10-15', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/2/29/Max_cape.png?23ebf'},  
+          {content: "Skill cape perks", start: '2015-12-03', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/3/33/Construct._cape%28t%29.png?2aac1'},  
+          {content: "Zeah", start: '2016-01-07', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/8/88/Kourend_Favour.png?541eb'},  
+          {content: "Dragon Warhammer", start: '2016-01-21', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/e/ea/Dragon_warhammer.png?73103'},  
+          {content: "Monkey madness II", start: '2016-05-06', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/8/86/Monkey_%28Monkey_Madness_II%29.png?7027d'}, 
+          {content: "Zenyte Jewellery", start: '2016-05-06', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/e/e7/Zenyte_shard.png?8abb8'},
+          {content: "Runelite", start: '2016-05-07', 'className': 'general', group: 0, image:'https://pbs.twimg.com/profile_images/1080521423733616640/xfSrEBc3.jpg'}, 
+          {content: "Woodcutting guild", start: '2016-06-02', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/1/16/Redwood_logs.png?2e2e3'},  
+          {content: "Skotizo", start: '2016-06-16', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/9/9e/Dark_totem.png?cb9aa'},
+          {content: "Catacombs", start: '2016-06-9', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/5/5c/Ancient_shard.png?0b6b6'},  
+          {content: "Last Man Standing", start: '2016-08-04', 'className': 'general', group: 0, image:'https://www.runescape.com/img/rsp777/game_icon_lmsrank.png?2'},  
+          {content: "Skilling pets", start: '2016-09-01', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/4/47/Rift_guardian_%28fire%29.png?c0946'},  
+          {content: "Wintertodt", start: '2016-09-08', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/b/b9/Tome_of_fire.png?c9227'},  
+          {content: "Superiors", start: '2016-09-15', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/f/fe/Imbued_heart.png?19317'},  
+          {content: "Ourania altar", start: '2016-10-13', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/f/fb/Ourania_Teleport.png?ef101'},  
+          {content: "Hardcore Ironman", start: '2016-11-10', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/b/b8/Hardcore_ironman_chat_badge.png?a1753'},  
+          {content: "Chambers of Xeric", start: '2017-01-05', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/4/4f/Twisted_bow.png?08f42'},  
+          {content: "World map", start: '2017-05-25', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/0/02/World_map_icon.png?6dae2'},  
+          {content: "Inferno", start: '2017-06-01', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/1/14/Infernal_cape.png?80b36'},  
+          {content: "Fossil Island", start: '2017-09-07', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/4/4e/Unidentified_rare_fossil.png?35dd5'},  
+          {content: "Volcanic mine", start: '2017-09-07', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/2/2e/Gold_ore_fragment.png?923a0'},  
+          {content: "Grotesque Guardians", start: '2017-10-26', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/c/c0/Granite_ring.png?4e070'},   
+          {content: "Mage Arena II", start: '2017-11-23', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/f/f8/Imbued_guthix_cape.png?7331d'},  
+          {content: "Revenant Caves", start: '2017-11-23', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/f/f0/Ancient_emblem.png?15de7'},  
+          {content: "Corsair Curse", start: '2017-12-07', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/2/2b/Shaman_mask.png?c943f'},  
+          {content: "Dragon Slayer II", start: '2018-01-04', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/7/78/Dragon_platebody.png?cc5f3'},
+          {content: "Vorkath", start: '2018-01-04', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/a/af/Vorkath%27s_head.png?b7686'},
+          {content: "A Taste of Hope", start: '2018-05-24', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/a/a9/Drakan%27s_medallion.png?5eb13'},
+          {content: "Theatre of Blood", start: '2018-06-07', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/f/fa/Scythe_of_vitur_%28uncharged%29.png?c82f9'},
+          {content: "Making Friends with My Arm", start: '2018-09-06', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/7/7a/Burntmeat_chathead.png?700e1'},
+          {content: "Mobile", start: '2018-10-30', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/8/8c/Display_%28mobile%29.png?f6697'},
+          {content: "Collection Log", start: '2018-12-06', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/e/ec/Collection_log.png?70d32'},
+          {content: "Farming guild", start: '2019-01-10', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/d/da/Bottomless_compost_bucket.png?3fbd5'},
+          {content: "Alchemical hydra", start: '2019-01-10', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/6/67/Dragon_hunter_lance.png?cc5f3'},
+          {content: "Konar", start: '2019-01-10', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/c/ca/Konar_quo_Maten_chathead.png?e0801'},
+          {content: "Sarachnis", start: '2019-07-04', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/2/20/Sarachnis_cudgel.png?c4e91'},
+          {content: "Song of the Elves", start: '2019-07-25', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/d/d0/Fragment_of_Seren_chathead.png?cb83b'},
+          {content: "Prifddinas", start: '2019-07-25', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/6/6d/Crystal_crown_%28Ithell%29.png?5580c'},
+          {content: "The Gauntlet", start: '2019-07-25', 'className': 'pvm', group: "pvm",image:'https://oldschool.runescape.wiki/images/a/a7/Youngllef.png?1e205'},
+          {content: "Zalcano", start: '2019-07-25', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/8/8b/Smolcano.png?52875'},
+          {content: "Fremennik Exiles", start: '2019-09-26', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/f/fb/Neitiznot_faceguard.png?0ec9b'},
+          {content: "Nightmare of Ashihama", start: '2020-02-07', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/d/db/Harmonised_orb.png?bfea5'},
+          {content: "Sins of the father", start: '2020-06-04', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/6/6a/Blisterwood_flail.png?78406'},
+          {content: "Hallowed Sepulchre", start: '2020-06-04', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/d/de/Ring_of_endurance_%28uncharged%29.png?4e1b1'},
+          {content: "Darkmeyer", start: '2020-06-04', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/7/7f/Daeyalt_essence.png?8d6a6'},
+          {content: "Mahogany homes", start: '2020-08-26', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/3/3e/Amy%27s_saw.png?ec289'},
+          {content: "Soul Wars", start: '2021-01-06', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/8/83/Lil%27_creator.png?60046'},
+          {content: "Steam Client", start: '2021-02-24', 'className': 'general', group: 0 },
+          {content: "Tempoross", start: '2021-03-24', 'className': 'skill', group: 'skill', image:'https://oldschool.runescape.wiki/images/9/96/Tiny_tempor.png?77385'},
+          {content: "Below Ice Mountain", start: '2021-04-14', 'className': 'quest', group: 'quest', image:'https://oldschool.runescape.wiki/images/0/08/Imcando_hammer.png?2e2d6'},
+          {content: "Clan rework", start: '2021-05-26', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/5/52/Clan_vexillum_%28purple%29.png?338e1'},
+          {content: "A Kingdom Divided", start: '2021-06-16', 'className': 'quest', group: 'quest', image:'https://oldschool.runescape.wiki/images/thumb/b/b5/Arceuus_icon_detail.png/180px-Arceuus_icon_detail.png?06fe1'},
+          {content: "Combat Achievements", start: '2021-07-21', 'className': 'pvm', group: 'pvm', image:'https://oldschool.runescape.wiki/images/8/8e/Ghommal%27s_hilt_6.png?77553'},
+          {content: "Runelite HD", start: '2021-09-13', 'className': 'general', group: 0},
+          {content: "Group Ironman", start: '2021-10-6', 'className': 'general', group: 0},
+
+      
+      
+
+          {content: "Twisted League", start: '2019-11-14', end: '2020-01-16', 'className': 'leagues', group: 'gamemodes', type:'range'},
+          {content: "Trailblazer League", start: '2020-10-28', end: '2021-01-06', 'className': 'leagues', group: 'gamemodes', type:'range'},
+          {content: "Shattered Relics League", start: '2021-11-03', end: '2022-01-09', 'className': 'leagues', group: 'gamemodes', type:'range'},
+          {content: "Deadman I", start: '2016-03-26', end: '2016-06-15', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman II", start: '2016-06-25', end: '2016-09-22', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman III", start: '2016-10-01', end: '2016-11-03', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman IV", start: '2016-12-17', end: '2017-01-26', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman V", start: '2017-03-25', end: '2017-04-27', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman VI", start: '2017-07-01', end: '2017-07-27', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman VII", start: '2017-09-24', end: '2017-10-26', 'className': 'deadman', group: 'gamemodes', type:'range'},  
+          {content: "Deadman VIII", start: '2017-12-09', end: '2018-01-11', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman IX", start: '2018-03-17', end: '2018-04-19', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman X", start: '2018-06-30', end: '2018-07-26', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman XI", start: '2018-09-15', end: '2018-10-11', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman XII", start: '2018-12-15', end: '2019-01-10', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman XIII", start: '2019-03-30', end: '2019-05-02', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman XIV", start: '2020-05-01', end: '2020-05-30', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "Deadman Reborn", start: '2021-08-25', end: '2021-09-16', 'className': 'deadman', group: 'gamemodes', type:'range'},
+          {content: "King of the Skill", start: '2017-11-01', end: '2017-11-30','className': 'king', group: 'gamemodes', type:'range'},
+          {content: "Crack the Clue", start: '2016-06-17','className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/thumb/d/df/Clue_scroll_detail.png/195px-Clue_scroll_detail.png?ef179'},
+        ]);
+            
+        var groupsBottomRow = new vis.DataSet();
+        groupsBottomRow.add({id: 0, content: "General Updates", treeLevel:0});
+        groupsBottomRow.add({id: "pvm", content: "Combat updates", treeLevel:0 });
+        groupsBottomRow.add({id: "slayer", content: "Slayer", treeLevel:0 });
+        groupsBottomRow.add({id: "quest", content: "Quests", treeLevel:0 });
+        groupsBottomRow.add({id: "skill", content: "Skilling", treeLevel:0 });
+        
+        groupsBottomRow.add({id: 'gamemodes', content: "Temporary gamemodes", treeLevel:0});
+
+        var dataset_graph = new vis.DataSet(items_graph);
+        var graphOptions = {
+          start: '2013-02-26',
+          end: '2021-10-01',
+          height: '100%',
+          drawPoints: false,
+          zoomMin: 1000 * 60 * 60 * 24 * 7,             
+          zoomMax: 1000 * 60 * 60 * 24 * 31 * 12 * 10,
+          dataAxis: {left:{title:{text: "Player count"}}} ,
+          min: new Date(2013, 0, 1),                
+          max: new Date(2022, 4, 1),             
+        };
+        var timelineOptions = {
+          start: '2013-02-26',
+          end: '2021-10-01',
+          //height: '100%',
+          type: 'point',
+          zoomMin: 1000 * 60 * 60 * 24 * 7,             
+          zoomMax: 1000 * 60 * 60 * 24 * 31 * 12 * 10,
+          margin: { item: {vertical: 0}}, 
+          min: new Date(2013, 0, 1),                
+          max: new Date(2022, 4, 1),   
+          template: template,
+          margin: 0,
+          orientation: {axis: "none"}
+        };
+        
+        // create data and a Timeline
+        var graph_container = document.getElementById('visualization-top-row');
+        var event_container = document.getElementById('visualization-bottom-row');
+
+        var graph2d = new vis.Graph2d(graph_container, dataset_graph, graphOptions);
+        var timeline = new vis.Timeline(event_container);
+
+        timeline.setGroups(groupsBottomRow);
+        timeline.setOptions(timelineOptions);
+        timeline.setItems(items);
+
+        function onChangeGraph(range) {
+            if (!range.byUser) {
+              return;
+            }
+            timeline.setOptions({
+              start: range.start,
+              end: range.end,
+              //height: '100%',
+          });
+        }
+
+        function onChangeTimeline(range) {
+            if (!range.byUser) {
+              return;
+            }
+            graph2d.setOptions({
+              start: range.start,
+              end: range.end,
+              //height: '100%'
+          });
+        }
+
+        graph2d.on('rangechange', onChangeGraph);
+        timeline.on('rangechange', onChangeTimeline);
+
+        graph2d.on('_change', function() {
+          visLabelSameWidth();
+        });
+
+        $(window).resize(function(){
+          visLabelSameWidth();
+        });
+
+        // Vis same width label.
+        function visLabelSameWidth() {
+          var ylabel_width = $("#visualization-bottom-row .vis-labelset .vis-label").width() + "px";
+          //$("#visualization-top-row")[0].childNodes[0].childNodes[2].style.left = ylabel_width;
+
+          var w1 = $("#visualization-top-row .vis-content .vis-data-axis").width();
+          var w2 = $("#visualization-bottom-row .vis-labelset .vis-label").width();
+
+          $("#visualization-top-row")[0].childNodes[0].childNodes[2].style.display = 'none';
+
+          if (w2 > w1) {
+            $("#visualization-top-row .vis-content")[1].style.width = ylabel_width;
+          }
+          else {
+            $("#visualization-bottom-row .vis-labelset .vis-label").width(w1+"px");
+          }
+        }
+        </script>
+    </body>
+
+
+
