@@ -61,9 +61,29 @@
             border-color: rgb(98, 0, 255);
             color: rgb(0, 0, 0);
         }
-        .vis-item.quest {
-            background-color: rgb(0, 195, 255);
-            border-color: rgb(0, 238, 255);
+        .vis-item.master {
+            background-color: rgb(255, 0, 0);
+            border-color: rgb(255, 0, 0);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.grandmaster{
+            background-color: rgb(204, 0, 255);
+            border-color: rgb(204, 0, 255);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.experienced {
+            background-color: rgb(255, 136, 0);
+            border-color: rgb(255, 136, 0);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.intermediate {
+            background-color: rgb(255, 255, 0);
+            border-color: rgb(255, 255, 0);
+            color: rgb(0, 0, 0);
+        }
+        .vis-item.novice {
+            background-color: rgb(0, 255, 0);
+            border-color: rgb(0, 255, 0);
             color: rgb(0, 0, 0);
         }
         .vis-item.skill {
@@ -172,11 +192,11 @@
           {content: "Elite Clues", start: '2014-06-12', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/a/a5/Clue_scroll_%28elite%29.png?e29cd'},  
           {content: "Boss pets", start: '2014-07-17', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/9/9c/Pet_chaos_elemental.png?e2d9b'},  
           {content: "Ironman", start: '2014-10-13', 'className': 'general', group: 0, image: 'https://oldschool.runescape.wiki/images/0/09/Ironman_chat_badge.png?a0a83'},  
-          {content: "Corporal Beast", start: '2014-10-16', 'className': 'pvm', group: "pvm", image: 'https://oldschool.runescape.wiki/images/5/53/Elysian_spirit_shield.png?1bc1e'},  
+          {content: "Corporeal Beast", start: '2014-10-16', 'className': 'pvm', group: "pvm", image: 'https://oldschool.runescape.wiki/images/5/53/Elysian_spirit_shield.png?1bc1e'},  
           {content: "Zulrah", start: '2015-01-05', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/7/72/Toxic_blowpipe.png?79f0d'},  
           {content: "Dragon defender", start: '2015-02-05', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/f/f1/Dragon_defender.png?3a184'},  
           {content: "Free to Play", start: '2015-02-19', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/8/8f/Fancy_boots.png?97fe8'},  
-          {content: "Grand Exchange", start: '2015-02-26', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/3/30/Coins_10000.png?7fa38'},  
+          {content: "Grand Exchange", start: '2015-02-26', 'className': 'general', group: 0, image:'https://static.wikia.nocookie.net/2007scape/images/3/30/Coins_10000.png/revision/latest/scale-to-width-down/30?cb=20181017211444'},  
           {content: "Achievement diaries", start: '2015-03-05', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/3/35/Achievement_diary_cape_%28t%29.png?727e9'},  
           {content: "Bonds", start: '2015-03-30', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/e/e3/Old_school_bond.png?2b41b'},  
           {content: "Cerberus", start: '2015-08-27', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/4/42/Primordial_boots.png?e2ec4'},  
@@ -185,7 +205,7 @@
           {content: "Skill cape perks", start: '2015-12-03', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/3/33/Construct._cape%28t%29.png?2aac1'},  
           {content: "Zeah", start: '2016-01-07', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/8/88/Kourend_Favour.png?541eb'},  
           {content: "Dragon Warhammer", start: '2016-01-21', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/e/ea/Dragon_warhammer.png?73103'},  
-          {content: "Monkey madness II", start: '2016-05-06', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/8/86/Monkey_%28Monkey_Madness_II%29.png?7027d'}, 
+          {content: "Monkey madness II", start: '2016-05-06', 'className': 'grandmaster', group: "quest", image:'https://oldschool.runescape.wiki/images/8/86/Monkey_%28Monkey_Madness_II%29.png?7027d'}, 
           {content: "Zenyte Jewellery", start: '2016-05-06', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/e/e7/Zenyte_shard.png?8abb8'},
           {content: "Runelite", start: '2016-05-07', 'className': 'general', group: 0, image:'https://pbs.twimg.com/profile_images/1080521423733616640/xfSrEBc3.jpg'}, 
           {content: "Woodcutting guild", start: '2016-06-02', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/1/16/Redwood_logs.png?2e2e3'},  
@@ -205,34 +225,34 @@
           {content: "Grotesque Guardians", start: '2017-10-26', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/c/c0/Granite_ring.png?4e070'},   
           {content: "Mage Arena II", start: '2017-11-23', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/f/f8/Imbued_guthix_cape.png?7331d'},  
           {content: "Revenant Caves", start: '2017-11-23', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/f/f0/Ancient_emblem.png?15de7'},  
-          {content: "Corsair Curse", start: '2017-12-07', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/2/2b/Shaman_mask.png?c943f'},  
-          {content: "Dragon Slayer II", start: '2018-01-04', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/7/78/Dragon_platebody.png?cc5f3'},
+          {content: "Corsair Curse", start: '2017-12-07', 'className': 'novice', group: "quest", image:'https://oldschool.runescape.wiki/images/2/2b/Shaman_mask.png?c943f'},  
+          {content: "Dragon Slayer II", start: '2018-01-04', 'className': 'grandmaster', group: "quest", image:'https://oldschool.runescape.wiki/images/7/78/Dragon_platebody.png?cc5f3'},
           {content: "Vorkath", start: '2018-01-04', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/a/af/Vorkath%27s_head.png?b7686'},
-          {content: "A Taste of Hope", start: '2018-05-24', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/a/a9/Drakan%27s_medallion.png?5eb13'},
+          {content: "A Taste of Hope", start: '2018-05-24', 'className': 'experienced', group: "quest", image:'https://oldschool.runescape.wiki/images/a/a9/Drakan%27s_medallion.png?5eb13'},
           {content: "Theatre of Blood", start: '2018-06-07', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/f/fa/Scythe_of_vitur_%28uncharged%29.png?c82f9'},
-          {content: "Making Friends with My Arm", start: '2018-09-06', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/7/7a/Burntmeat_chathead.png?700e1'},
+          {content: "Making Friends with My Arm", start: '2018-09-06', 'className': 'master', group: "quest", image:'https://oldschool.runescape.wiki/images/7/7a/Burntmeat_chathead.png?700e1'},
           {content: "Mobile", start: '2018-10-30', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/8/8c/Display_%28mobile%29.png?f6697'},
           {content: "Collection Log", start: '2018-12-06', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/e/ec/Collection_log.png?70d32'},
           {content: "Farming guild", start: '2019-01-10', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/d/da/Bottomless_compost_bucket.png?3fbd5'},
           {content: "Alchemical hydra", start: '2019-01-10', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/6/67/Dragon_hunter_lance.png?cc5f3'},
           {content: "Konar", start: '2019-01-10', 'className': 'slayer', group: "slayer", image:'https://oldschool.runescape.wiki/images/c/ca/Konar_quo_Maten_chathead.png?e0801'},
           {content: "Sarachnis", start: '2019-07-04', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/2/20/Sarachnis_cudgel.png?c4e91'},
-          {content: "Song of the Elves", start: '2019-07-25', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/d/d0/Fragment_of_Seren_chathead.png?cb83b'},
+          {content: "Song of the Elves", start: '2019-07-25', 'className': 'grandmaster', group: "quest", image:'https://oldschool.runescape.wiki/images/d/d0/Fragment_of_Seren_chathead.png?cb83b'},
           {content: "Prifddinas", start: '2019-07-25', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/6/6d/Crystal_crown_%28Ithell%29.png?5580c'},
           {content: "The Gauntlet", start: '2019-07-25', 'className': 'pvm', group: "pvm",image:'https://oldschool.runescape.wiki/images/a/a7/Youngllef.png?1e205'},
           {content: "Zalcano", start: '2019-07-25', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/8/8b/Smolcano.png?52875'},
-          {content: "Fremennik Exiles", start: '2019-09-26', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/f/fb/Neitiznot_faceguard.png?0ec9b'},
+          {content: "Fremennik Exiles", start: '2019-09-26', 'className': 'master', group: "quest", image:'https://oldschool.runescape.wiki/images/f/fb/Neitiznot_faceguard.png?0ec9b'},
           {content: "Nightmare of Ashihama", start: '2020-02-07', 'className': 'pvm', group: "pvm", image:'https://oldschool.runescape.wiki/images/d/db/Harmonised_orb.png?bfea5'},
-          {content: "Sins of the father", start: '2020-06-04', 'className': 'quest', group: "quest", image:'https://oldschool.runescape.wiki/images/6/6a/Blisterwood_flail.png?78406'},
+          {content: "Sins of the father", start: '2020-06-04', 'className': 'master', group: "quest", image:'https://oldschool.runescape.wiki/images/6/6a/Blisterwood_flail.png?78406'},
           {content: "Hallowed Sepulchre", start: '2020-06-04', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/d/de/Ring_of_endurance_%28uncharged%29.png?4e1b1'},
           {content: "Darkmeyer", start: '2020-06-04', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/7/7f/Daeyalt_essence.png?8d6a6'},
           {content: "Mahogany homes", start: '2020-08-26', 'className': 'skill', group: "skill", image:'https://oldschool.runescape.wiki/images/3/3e/Amy%27s_saw.png?ec289'},
           {content: "Soul Wars", start: '2021-01-06', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/8/83/Lil%27_creator.png?60046'},
           {content: "Steam Client", start: '2021-02-24', 'className': 'general', group: 0 },
           {content: "Tempoross", start: '2021-03-24', 'className': 'skill', group: 'skill', image:'https://oldschool.runescape.wiki/images/9/96/Tiny_tempor.png?77385'},
-          {content: "Below Ice Mountain", start: '2021-04-14', 'className': 'quest', group: 'quest', image:'https://oldschool.runescape.wiki/images/0/08/Imcando_hammer.png?2e2d6'},
+          {content: "Below Ice Mountain", start: '2021-04-14', 'className': 'novice', group: 'quest', image:'https://oldschool.runescape.wiki/images/0/08/Imcando_hammer.png?2e2d6'},
           {content: "Clan rework", start: '2021-05-26', 'className': 'general', group: 0, image:'https://oldschool.runescape.wiki/images/5/52/Clan_vexillum_%28purple%29.png?338e1'},
-          {content: "A Kingdom Divided", start: '2021-06-16', 'className': 'quest', group: 'quest', image:'https://oldschool.runescape.wiki/images/thumb/b/b5/Arceuus_icon_detail.png/180px-Arceuus_icon_detail.png?06fe1'},
+          {content: "A Kingdom Divided", start: '2021-06-16', 'className': 'experienced', group: 'quest', image:'https://oldschool.runescape.wiki/images/thumb/b/b5/Arceuus_icon_detail.png/180px-Arceuus_icon_detail.png?06fe1'},
           {content: "Combat Achievements", start: '2021-07-21', 'className': 'pvm', group: 'pvm', image:'https://oldschool.runescape.wiki/images/8/8e/Ghommal%27s_hilt_6.png?77553'},
           {content: "Runelite HD", start: '2021-09-13', 'className': 'general', group: 0},
           {content: "Group Ironman", start: '2021-10-6', 'className': 'general', group: 0},
@@ -361,6 +381,3 @@
         }
         </script>
     </body>
-
-
-
