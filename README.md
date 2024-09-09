@@ -1,6 +1,6 @@
 # OSRS-Timeline
 
-You can find the github page here: https://rururupert.github.io/OSRS-Timeline/
+You can find the github page here: https://rupertwatson.github.io/OSRS-Timeline/
 
 &nbsp;
 
